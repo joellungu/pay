@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:barcode_widget/barcode_widget.dart' as bc;
 import 'package:get/get.dart';
+import 'package:pay/pages/entreprise/produits.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter/material.dart';
 
@@ -39,16 +41,18 @@ class _Scnanner extends State<Scnanner> {
               controller = c;
               controller!.scannedDataStream.listen((scanData) {
                 print("${scanData.code}");
+                Map e = jsonDecode(scanData.code!);
                 //Get.back();
-                showDialog(
-                  context: context,
-                  builder: (c) {
-                    return AlertDialog(
-                      title: const Text("Resultas"),
-                      content: Text("${scanData.code}"),
-                    );
-                  },
-                );
+                Get.to(Produits("${e["id"]}", "${e["titre"]}"));
+                // showDialog(
+                //   context: context,
+                //   builder: (c) {
+                //     return AlertDialog(
+                //       title: const Text("Resultas"),
+                //       content: Text("${scanData.code}"),
+                //     );
+                //   },
+                // );
               });
             },
           ),

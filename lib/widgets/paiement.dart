@@ -46,10 +46,17 @@ class _PayementMethode extends State<PayementMethode> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [Text("Votre numéro de téléphone")],
+              children: [
+                Text(
+                  "Votre numéro de téléphone",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
             ),
           ),
           TextField(
@@ -70,7 +77,7 @@ class _PayementMethode extends State<PayementMethode> {
             height: 5,
           ),
           Text(
-            "Formulaire payant (${widget.prix} dollar) plus frais de transaction",
+            "Payer en toute sécurité avec Pay, votre partenaire sure!",
             textAlign: TextAlign.center,
           ),
           Row(
@@ -138,21 +145,32 @@ class _PayementMethode extends State<PayementMethode> {
                 );
                 var ref = getReference();
                 DateTime d = DateTime.now();
+                /**
+                 * public String ;
+    public int typ;
+    public long ;
+    public String ;
+    public String ;
+    public String ;
+    public String ;
+    public double ;
+    public String ;
+    public String ;
+    public boolean ;
+                 */
                 Map e = {
-                  "nom": widget.requette['nom'] ?? "",
-                  "postnom": widget.requette['postnom'] ?? "",
-                  "prenom": widget.requette['prenom'] ?? "",
-                  "genre": widget.requette['genre'] ?? "",
-                  "email": widget.requette['email'] ?? "",
-                  "adresse": widget.requette['adresse'] ?? "",
+                  "merchant": "PITUP",
+                  "idUtilisateur": widget.requette['idUtilisateur'] ?? "",
                   "date": "${d.day}/${d.month}/${d.year}",
                   "type": widget.type,
                   "demande": widget.demande,
-                  "phone": "243" + numero.text,
-                  "telephone": "243" + (widget.requette['telephone'] ?? ""),
-                  "reference": ref,
-                  "amount": widget.prix,
+                  "phone": "243${numero.text}",
+                  "reference": widget.requette['reference'],
+                  "amount": widget.requette['prix'],
                   "currency": gender,
+                  "service": "commande",
+                  "valider": false,
+                  "callbackurl": "",
                 };
                 print('element: $e');
                 Map m = await paiementController.paiement(e);
@@ -194,6 +212,9 @@ class _PayementMethode extends State<PayementMethode> {
                               backgroundColor: Colors.blue,
                               colorText: Colors.white,
                             );
+                            //
+                            //widget.f(widget.requette);
+                            //
                           } else if (rep['transaction']['status'] == "2" ||
                               rep['transaction']['status'] == 2) {
                             print("Paiement en attente");

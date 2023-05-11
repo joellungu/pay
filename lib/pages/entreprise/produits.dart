@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pay/pages/compte/services/panier.dart';
+import 'package:pay/utils/panier_controller.dart';
 import 'package:pay/utils/produit_controller.dart';
 import 'package:pay/utils/requete.dart';
 
@@ -8,10 +10,12 @@ import 'nouveau_produit.dart';
 
 class Produits extends GetView<ProduitController> {
   String id;
-  Produits(this.id) {
+  String titre;
+  Produits(this.id, this.titre) {
     controller.tousProduitsEntreprise(id);
   }
   //
+  PanierController panierController = Get.find();
 
   RxString nom = "".obs;
   //
@@ -26,6 +30,10 @@ class Produits extends GetView<ProduitController> {
         right: false,
         bottom: false,
         child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.indigo.shade900,
+            title: Text(titre),
+          ),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -74,7 +82,144 @@ class Produits extends GetView<ProduitController> {
                                     return ListTile(
                                       onTap: () {
                                         //
-                                        Get.to(DetailsPRoduit(e));
+                                        showDialog(
+                                            context: context,
+                                            builder: (c) {
+                                              TextEditingController quantite =
+                                                  TextEditingController(
+                                                      text: "1");
+                                              TextEditingController table =
+                                                  TextEditingController(
+                                                      text: "1");
+                                              return Material(
+                                                color: Colors.transparent,
+                                                child: Center(
+                                                  child: Container(
+                                                    height: 300,
+                                                    width: 300,
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15),
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .topCenter,
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                  "${e['nom']}"),
+                                                              IconButton(
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                },
+                                                                icon:
+                                                                    const Icon(
+                                                                  Icons.close,
+                                                                  size: 40,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: TextField(
+                                                            controller:
+                                                                quantite,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              label: Text(
+                                                                  "Quantité"),
+                                                              border:
+                                                                  OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: TextField(
+                                                            controller: table,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              label:
+                                                                  Text("Table"),
+                                                              border:
+                                                                  OutlineInputBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              if (quantite
+                                                                      .text !=
+                                                                  "0") {
+                                                                Map p = {
+                                                                  "id": e['id'],
+                                                                  "idBoutique":
+                                                                      "${e['idBoutique']}",
+                                                                  "nom":
+                                                                      "${e['nom']}",
+                                                                  "prix":
+                                                                      "${e['prix']}",
+                                                                  "devise":
+                                                                      "${e['devise']}",
+                                                                  "quantite":
+                                                                      quantite
+                                                                          .text,
+                                                                  "table": table
+                                                                      .text,
+                                                                };
+                                                                panierController
+                                                                    .listProduits
+                                                                    .add(p);
+                                                                Get.back();
+                                                              }
+                                                            },
+                                                            child: const Text(
+                                                                "Ajouter"),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                        //
                                       },
                                       leading: Container(
                                         height: 50,
@@ -92,20 +237,16 @@ class Produits extends GetView<ProduitController> {
                                         ),
                                       ),
                                       title: Text(
-                                        "${e['nom']} | ${e['prix']} ${e['devise']}",
+                                        "${e['nom']} ",
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
+                                          fontSize: 20,
                                         ),
                                       ),
                                       subtitle: Text(
-                                          "${e['quantite']} | ${e['unite']}"),
-                                      trailing: IconButton(
-                                        onPressed: () {
-                                          //
-                                          //
-                                        },
-                                        icon: const Icon(
-                                          Icons.add,
+                                        "${e['prix']} ${e['devise']}",
+                                        style: TextStyle(
+                                          fontSize: 20,
                                         ),
                                       ),
                                     );
@@ -132,27 +273,13 @@ class Produits extends GetView<ProduitController> {
               ),
             ],
           ),
-          floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FloatingActionButton(
-                onPressed: () {
-                  Get.to(NouveauProduit());
-                },
-                heroTag: "payer",
-                child: const Icon(Icons.add_shopping_cart),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              FloatingActionButton(
-                onPressed: () {
-                  Get.to(NouveauProduit());
-                },
-                heroTag: "ajouter",
-                child: Icon(Icons.add),
-              ),
-            ],
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              //
+              Get.to(Panier());
+            },
+            heroTag: "payer",
+            child: const Icon(Icons.add_shopping_cart),
           ),
         ),
       ),

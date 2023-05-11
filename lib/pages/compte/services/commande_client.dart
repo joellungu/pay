@@ -37,7 +37,7 @@ class CommandeClient extends GetView<ProduitController> {
                   },
                   decoration: InputDecoration(
                     hintText: "Cherche ",
-                    contentPadding: const EdgeInsets.all(5),
+                    contentPadding: const EdgeInsets.all(0),
                     prefixIcon: const Icon(
                       Icons.search,
                       color: Colors.grey,

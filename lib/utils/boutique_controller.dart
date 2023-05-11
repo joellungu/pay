@@ -4,32 +4,50 @@ import 'package:pay/pages/accueil.dart';
 import 'package:pay/pages/login/connexion.dart';
 import 'package:pay/utils/requete.dart';
 
-class ProduitController extends GetxController with StateMixin<List> {
+class BoutiqueController extends GetxController with StateMixin<List> {
   //
   final box = GetStorage();
   //
   Requete requete = Requete();
   //
-  RxList achats = [].obs;
+  RxList business = [].obs;
   //
-  tousProduits() async {
+  all() async {
     String idbusiness = "1";
     change([], status: RxStatus.loading());
-    Response rep = await requete.getE("produit/all/$idbusiness");
+    Response rep = await requete.getE("boutique/all");
     if (rep.isOk) {
+      print(rep.body);
+      //business.value = rep.body;
       change(rep.body, status: RxStatus.success());
     } else {
+      //business = [].obs;
+      change([], status: RxStatus.empty());
+      //return [];
+    }
+  }
+
+  allEvenements() async {
+    String idbusiness = "1";
+    change([], status: RxStatus.loading());
+    Response rep = await requete.getE("produit/event");
+    if (rep.isOk) {
+      print(rep.body);
+      //business.value = rep.body;
+      change(rep.body, status: RxStatus.success());
+    } else {
+      //business = [].obs;
       change([], status: RxStatus.empty());
       //return [];
     }
   }
 
   tousProduitsEntreprise(String id) async {
-    //String idbusiness = "1";
+    String idbusiness = "1";
     change([], status: RxStatus.loading());
-    print("produit/all/$id");
-    Response rep = await requete.getE("produit/all/$id");
+    Response rep = await requete.getE("produit/all/$idbusiness");
     if (rep.isOk) {
+      print(rep.body);
       change(rep.body, status: RxStatus.success());
     } else {
       change([], status: RxStatus.empty());

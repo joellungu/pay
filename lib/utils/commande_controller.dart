@@ -75,5 +75,27 @@ class CommandeController extends GetxController with StateMixin<List> {
       Get.snackbar("Erreur", "Un problème est survenu lors de l'inscription");
     }
   }
+
+  //
+  Future<void> commandes(String idUtilisateur, String date) async {
+    //
+    Response rep =
+        await requete.getE("commande/utilisateur/$idUtilisateur/$date");
+    if (rep.isOk) {
+      print(rep.body);
+      print(rep.statusCode);
+      //
+      change(rep.body, status: RxStatus.success());
+      //return rep.body;
+      //
+    } else {
+      //
+      print(rep.body);
+      print(rep.statusCode);
+      change([], status: RxStatus.empty());
+      //return [];
+      //
+    }
+  }
   //
 }

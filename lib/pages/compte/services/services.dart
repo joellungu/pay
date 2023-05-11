@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'evenements.dart';
 import 'reservation_client.dart';
 import 'scanne.dart';
 
@@ -29,6 +30,8 @@ class Services extends StatelessWidget {
               Get.to(Scnanner());
             } else if (index == 1) {
               Get.to(ReservationClient());
+            } else if (index == 2) {
+              Get.to(Evenements());
             }
           },
           child: SizedBox(

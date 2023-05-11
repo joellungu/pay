@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pay/pages/accueil.dart';
-import 'package:pay/pages/login/connexion.dart';
-import 'package:pay/utils/requete.dart';
 
-class LoginController extends GetxController {
+import 'requete.dart';
+
+class PanierController extends GetxController with StateMixin<List> {
   //
   final box = GetStorage();
   //
   Requete requete = Requete();
+  //
+  RxList listProduits = [].obs;
   //
   Future<void> connexion(String telephon, String motdepasse) async {
     //
     Response rep =
         await requete.getE("utilisateur/login/$telephon/$motdepasse");
     if (rep.isOk) {
-      print(rep.statusCode);
-      print(rep.body);
       box.write("user", rep.body);
       Get.back();
       Get.snackbar(
@@ -26,10 +25,8 @@ class LoginController extends GetxController {
         colorText: Colors.black,
         backgroundColor: Colors.white,
       );
-      Get.off(Accueil());
+      //Get.off(Accueil());
     } else {
-      print(rep.statusCode);
-      print(rep.body);
       Get.back();
       Get.snackbar("Erreur", "Un problème lors de la connexion");
     }
@@ -44,7 +41,7 @@ class LoginController extends GetxController {
       box.write("user", rep.body);
       Get.back();
       Get.snackbar("Succès", "L'enregistrement à reussit");
-      Get.off(Accueil());
+      //Get.off(Accueil());
     } else {
       Get.back();
       Get.snackbar("Erreur", "Un problème lors de la connexion");
@@ -52,29 +49,28 @@ class LoginController extends GetxController {
   }
 
   //
-  Future<void> supprimer(String id) async {
-    //
-    Response rep = await requete.deleteE("utilisateur/$id");
-    if (rep.isOk) {
-      box.write("user", rep.body);
-      Get.back();
-      Get.snackbar("Succès", "L'enregistrement à reussit");
-      Get.off(Connexion());
-    } else {
-      Get.back();
-      Get.snackbar("Erreur", "Un problème lors de la suppression");
-    }
-  }
+  // Future<void> supprimer(String id) async {
+  //   //
+  //   Response rep = await requete.deleteE("utilisateur/$id");
+  //   if (rep.isOk) {
+  //     box.write("user", rep.body);
+  //     Get.back();
+  //     Get.snackbar("Succès", "L'enregistrement à reussit");
+  //     Get.off(Connexion());
+  //   } else {
+  //     Get.back();
+  //     Get.snackbar("Erreur", "Un problème lors de la suppression");
+  //   }
+  // }
 
   //
-  Future<void> mettreajour(Map e) async {
+  Future<void> mettreajourCommande(Map e) async {
     //
-    Response rep = await requete.putE("utilisateur", e);
+    Response rep = await requete.putE("commande", e);
     if (rep.isOk) {
-      box.write("user", rep.body);
       Get.back();
       Get.snackbar("Succès", "Mise à jour éffectué");
-      Get.off(Accueil());
+      //Get.off(Accueil());
     } else {
       Get.back();
       Get.snackbar("Erreur", "Un problème lors de la mise à jour");
@@ -82,20 +78,27 @@ class LoginController extends GetxController {
   }
 
   //
-  Future<void> inscription(Map e) async {
+  Future<void> commander(Map e) async {
     //
-    Response rep = await requete.postE("utilisateur", e);
+    Response rep = await requete.postE("commande", e);
     if (rep.isOk) {
       //
-      box.write("user", rep.body);
+      List l = box.read("commandes") ?? [];
+      l.add(rep.body);
+      box.write("commandes", l);
+      //
+      listProduits.value = [];
+      //
       Get.back();
-      Get.snackbar("Succès", "L'enregistrement à reussit");
-      Get.off(Accueil());
+      Get.snackbar("Succès", "Commande éffectué !");
+
+      //Get.off(Accueil());
     } else {
       //
       print(rep.body);
       Get.back();
-      Get.snackbar("Erreur", "Un problème est survenu lors de l'inscription");
+      Get.snackbar("Erreur",
+          "Un problème est survenu lors de l'enregistrement de la commande");
     }
   }
   //

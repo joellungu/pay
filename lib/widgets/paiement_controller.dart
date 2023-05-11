@@ -18,13 +18,13 @@ class PaiementController extends GetxController {
   }
 
   Future<Map> verification(String orderNumber) async {
+    //flexpay
     var rep = await http.get(
-      Uri.parse(
-          "http://41.243.7.46:3006/flexpay/api/rest/v1/check/$orderNumber"),
+      Uri.parse("http://41.243.7.46:3006/api/rest/v1/check/$orderNumber"),
       headers: {
         "Content-Type": "application/json",
         "Authorization":
-            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcL2xvZ2luIiwicm9sZXMiOlsiTUVSQ0hBTlQiXSwiZXhwIjoxNzMzOTEwMTY5LCJzdWIiOiJlNjFiZTYyNTA2M2NlNGQzOTc3ZTY2ZTI1ODdiZjIwOSJ9.KXwGzLyTGJT4iLnA6rtqPKRLE195j5oFWLbmpOlh2uo",
+            "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcL2xvZ2luIiwicm9sZXMiOlsiTUVSQ0hBTlQiXSwiZXhwIjoxNzQ1NTg3Nzc1LCJzdWIiOiI2OGQ5MTY2NzY0ZjFiZDMyYTVjZjBjZWJiN2I0NjMyYiJ9.4F57X9ybGSbPw2mxbMPjV8uo-yq56A0QixXYkuyeC60",
       },
     );
     /**

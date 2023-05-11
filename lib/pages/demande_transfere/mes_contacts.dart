@@ -42,25 +42,26 @@ class MesContacts extends StatelessWidget {
                 height: 10,
               ),
               Expanded(
-                  flex: 1,
-                  child: FutureBuilder(
-                    future: getAll(),
-                    builder: (c, t) {
-                      if (t.hasData) {
-                        return t.data as Widget;
-                      } else if (t.hasError) {
-                        return Center(
-                          child: Icon(Icons.hourglass_empty),
-                        );
-                      }
+                flex: 1,
+                child: FutureBuilder(
+                  future: getAll(),
+                  builder: (c, t) {
+                    if (t.hasData) {
+                      return t.data as Widget;
+                    } else if (t.hasError) {
                       return Center(
-                        child: SizedBox(
-                          height: 40,
-                          width: 40,
-                        ),
+                        child: Icon(Icons.hourglass_empty),
                       );
-                    },
-                  ))
+                    }
+                    return Center(
+                      child: SizedBox(
+                        height: 40,
+                        width: 40,
+                      ),
+                    );
+                  },
+                ),
+              )
             ],
           ),
           floatingActionButton: FloatingActionButton(

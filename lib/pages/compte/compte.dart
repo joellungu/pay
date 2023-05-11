@@ -1,3 +1,4 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -186,218 +187,79 @@ class _Compte extends State<Compte> {
                                   const SizedBox(
                                     height: 5,
                                   ),
-                                  renverser.value
+                                  !renverser.value
                                       ? Card(
-                                          color: Colors.indigo.shade900,
+                                          color: Colors.indigo.shade200,
                                           elevation: 3,
-                                          child: Column(
+                                          child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(left: 10),
-                                                child: Row(children: [
-                                                  Icon(
-                                                    Icons.wallet,
-                                                    color:
-                                                        Colors.green.shade700,
+                                              Expanded(
+                                                flex: 5,
+                                                child: Padding(
+                                                  padding: EdgeInsets.all(10),
+                                                  child: BarcodeWidget(
+                                                    barcode: Barcode.qrCode(
+                                                      errorCorrectLevel:
+                                                          BarcodeQRCorrectionLevel
+                                                              .high,
+                                                    ),
+                                                    data: '1234567\n7',
+                                                    width: 200,
+                                                    height: 200,
                                                   ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    "Vos comptes",
-                                                    style: TextStyle(
-                                                        color: Colors
-                                                            .grey.shade500),
-                                                  ),
-                                                ]),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  //
-                                                  //showSimpleModal(Lieu(0), context);
-
-                                                  //
-                                                },
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                    Colors.indigo.shade800
-                                                        .withOpacity(0.5),
-                                                  ),
-                                                  elevation:
-                                                      MaterialStateProperty.all(
-                                                          0),
                                                 ),
-                                                child: SizedBox(
-                                                  width: Get.size.width / 1.2,
-                                                  height: 65,
-                                                  child: Row(
+                                              ),
+                                              Expanded(
+                                                flex: 5,
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .spaceBetween,
+                                                            .spaceAround,
                                                     children: [
-                                                      Expanded(
-                                                        flex: 2,
-                                                        child: Text(
-                                                          "CDF",
-                                                          style: TextStyle(
-                                                            color: Colors
-                                                                .grey.shade500,
-                                                            fontSize: 20,
-                                                          ),
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text.rich(
+                                                          TextSpan(
+                                                              text: "",
+                                                              children: [
+                                                                TextSpan(
+                                                                  text:
+                                                                      "Vodacom\n",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    color: Colors
+                                                                        .indigo
+                                                                        .shade900,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                                const TextSpan(
+                                                                  text:
+                                                                      "+243 815 381 693",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ]),
                                                         ),
-                                                      ),
-                                                      Expanded(
-                                                        flex: 9,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              "130050",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade400,
-                                                                fontSize: 25,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
+                                                      )
                                                     ],
                                                   ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  //showSimpleModal(Lieu(1), context);
-                                                },
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all(
-                                                    Colors.indigo.shade800
-                                                        .withOpacity(0.5),
-                                                  ),
-                                                  elevation:
-                                                      MaterialStateProperty.all(
-                                                          0),
-                                                ),
-                                                child: SizedBox(
-                                                  width: Get.size.width / 1.2,
-                                                  height: 65,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        flex: 2,
-                                                        child: Text(
-                                                          "USD",
-                                                          style: TextStyle(
-                                                            color: Colors
-                                                                .grey.shade500,
-                                                            fontSize: 20,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        flex: 9,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              "3010",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: TextStyle(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade400,
-                                                                fontSize: 25,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: 15),
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 5),
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: Colors.indigo.shade800
-                                                      .withOpacity(0.5),
-                                                ),
-                                                width: Get.size.width,
-                                                height: 30,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 2,
-                                                      child: Text(
-                                                        "TAUX",
-                                                        style: TextStyle(
-                                                          color: Colors
-                                                              .green.shade700,
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                      flex: 9,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            "2503",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: TextStyle(
-                                                              color: Colors.grey
-                                                                  .shade400,
-                                                              fontSize: 15,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
                                                 ),
                                               ),
                                             ],
